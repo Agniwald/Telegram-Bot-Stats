@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>spaceshinobi bot's stats</title>
+  <!-- Bootstrap core CSS -->
+  <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='css/simple-sidebar.css') }}" rel="stylesheet">
+  <!-- Chart.js --> 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+  <!-- Data loader -->
+  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Bots</div>
+      <div class="list-group list-group-flush">
+        {% for bot in bot_list %}
+          <a class="list-group-item list-group-item-action bg-light" onclick="fetch('{{bot}}', '7');">{{ bot }}</a>
+        {% endfor %}
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Hide/Expose</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li id="7" class="nav-item active">
+              <a class="nav-link"  onclick="fetch('{{bot}}', '7')">Week</a>
+            </li>
+            <li id="31" class="nav-item">
+              <a class="nav-link" onclick="fetch('{{bot}}', '31')">Month</a>
+            </li>
+            <li id="365" class="nav-item">
+              <a class="nav-link" onclick="fetch('{{bot}}', '365')">Year</a>
+            </li>
+            <li id="0" class="nav-item">
+              <a class="nav-link" onclick="fetch('{{bot}}', '0')">Whole time</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div id="content" class="container-fluid">
+        <h2 id="name">Choose your fighter on the left or in a navbar</h2>
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{{ url_for('static', filename='jquery/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
