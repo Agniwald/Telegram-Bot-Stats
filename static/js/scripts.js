@@ -10,7 +10,12 @@ function show(labels_to_show, datasets_to_show){
       backgroundColor: datasets_to_show[i]['backgroundColor'],
       borderColor: datasets_to_show[i]['borderColor'],
       data: datasets_to_show[i]['data'],
-      fill: false
+      fill: false,
+      trendlineLinear: {
+        style: datasets_to_show[i]['backgroundColor'],
+        lineStyle: "dotted",
+        width: 2
+      }
     });
   }
 
