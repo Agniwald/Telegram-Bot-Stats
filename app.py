@@ -68,7 +68,7 @@ def fetch(bot_name, delta):
 			if d["lang"].upper() in lang_data["labels"]:
 				ind = lang_data["labels"].index(d['lang'].upper())
 				lang_data["datasets"][0]["data"][ind] += 1
-			else "lang" in d.keys():
+			else:
 				lang_data["labels"].append(d["lang"].upper())
 				r = random.randint(0, 255)
 				g = random.randint(0, 255)
