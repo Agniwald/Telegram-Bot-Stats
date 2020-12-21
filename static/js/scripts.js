@@ -1,6 +1,6 @@
 var active = '';
 
-function show(labels_to_show, datasets_to_show){
+function show(labels_to_show, datasets_to_show, lang_data){
 	var ctx = document.getElementById('myChart').getContext('2d');
 
   var parsed_datasets = [];
@@ -20,19 +20,22 @@ function show(labels_to_show, datasets_to_show){
   }
 
   var chart = new Chart(ctx, {
-    // The type of chart we want to create
     type: 'line',
-    
-    // The data for our dataset
     data: {
         labels: labels_to_show,
         datasets: parsed_datasets
     },
+    options: {}
+  });
 
-    // Configuration options go here
+  var ctx2 = document.getElementById('myChart2').getContext('2d');
+  var chart2 = new Chart(ctx2, {
+    type: 'doughnut',
+    data: lang_data,
     options: {}
   });
 }
+
 
 function change_range(range){
   var li = document.getElementById(range);
@@ -57,7 +60,7 @@ function fetch(bot, range){
   xhttp.open('GET', "/" + bot + "/" + range, true);
   xhttp.onload  = function() {
     var jsonResponse = xhttp.response;
-    show(jsonResponse['labels'], jsonResponse['datasets']);
+    show(jsonResponse['labels'], jsonResponse['datasets'], jsonResponse['lang_data']);
     document.getElementById("name").innerHTML = bot;
   };
 	xhttp.send();
