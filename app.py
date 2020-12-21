@@ -65,7 +65,9 @@ def fetch(bot_name, delta):
 	}
 	for d in bot_data_list:
 		if "lang" in d.keys():
-			if d["lang"].upper() in lang_data["labels"]:
+			if not d["lang"]:
+				continue
+			elif d["lang"].upper() in lang_data["labels"]:
 				ind = lang_data["labels"].index(d['lang'].upper())
 				lang_data["datasets"][0]["data"][ind] += 1
 			else:
