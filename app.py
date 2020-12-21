@@ -64,16 +64,17 @@ def fetch(bot_name, delta):
 		}]
 	}
 	for d in bot_data_list:
-		if "lang" in d.keys() and d["lang"].upper() in lang_data["labels"]:
-			ind = lang_data["labels"].index(d['lang'].upper())
-			lang_data["datasets"][0]["data"][ind] += 1
-		elif "lang" in d.keys():
-			lang_data["labels"].append(d["lang"].upper())
-			r = random.randint(0, 255)
-			g = random.randint(0, 255)
-			b = random.randint(0, 255)
-			lang_data["datasets"][0]["backgroundColor"].append(f'rgb({r}, {g}, {b})')
-			lang_data["datasets"][0]["data"].append(1)
+		if "lang" in d.keys():
+			if d["lang"].upper() in lang_data["labels"]:
+				ind = lang_data["labels"].index(d['lang'].upper())
+				lang_data["datasets"][0]["data"][ind] += 1
+			else "lang" in d.keys():
+				lang_data["labels"].append(d["lang"].upper())
+				r = random.randint(0, 255)
+				g = random.randint(0, 255)
+				b = random.randint(0, 255)
+				lang_data["datasets"][0]["backgroundColor"].append(f'rgb({r}, {g}, {b})')
+				lang_data["datasets"][0]["data"].append(1)
 
 	return dict({"labels": labels, "datasets": datasets, "lang_data": lang_data})
 
