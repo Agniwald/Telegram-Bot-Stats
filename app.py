@@ -4,6 +4,7 @@ from datetime import datetime as dt
 import pymongo
 import random
 import os
+import time
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -17,15 +18,17 @@ db = cluster["stats"]["stats"]
 
 def fetch(bot_name, delta):
 	# Get bot's data from last range
-	bot_data = db.find({"bot_name": bot_name})
 	bot_commands = db.distinct("command", {"bot_name": bot_name})
 	today = datetime.date.today()
+
 	if delta:
 		start_delta = datetime.timedelta(days=delta)
-		last_range = today - start_delta
-		bot_data_list = [d for d in bot_data if dt.strptime(d['date'], '%Y-%m-%d').date() >= last_range ]
+		last_range = datetime.datetime.strftime(today - start_delta, "%Y-%m-%d")
+		bot_data = db.find({"bot_name": bot_name, "date": {"$gte": last_range}})
+		bot_data_list = list(bot_data)
 	else:
-		bot_data_list = [d for d in bot_data]
+		bot_data = db.find({"bot_name": bot_name})
+		bot_data_list = list(bot_data)
 
 	# Get sorted dates as labels
 	dates = set(d['date'] for d in bot_data_list)
@@ -95,9 +98,9 @@ def bot(bot_name):
 
 
 @ app.route("/<string:bot_name>/<int:delta>")
-def bot_week(bot_name, delta):
+def bot_delta(bot_name, delta):
 	return fetch(bot_name, delta)
 
 
 if __name__ == '__main__':
-	app.run(debug=False)
+	app.run(debug=True)
